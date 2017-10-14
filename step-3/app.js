@@ -7,22 +7,43 @@ var app = new Vue({
           todoList: []
     },
     created: function(){
-    window.onbeforeunload = ()=>{
-      let dataString = JSON.stringify(this.todoList) // JSON 文档: https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/JSON
-      window.localStorage.setItem('myTodos', dataString) // 看文档https://developer.mozilla.org/zh-CN/docs/Web/API/Window/localStorage
-    }
+        window.onbeforeunload = ()=>{
+        let dataString = JSON.stringify(this.todoList)
+        window.localStorage.setItem('myTodos', dataString)
+        let dataString2 = JSON.stringify(this.newTodo)
+        window.localStorage.setItem('mynewTodos', dataString2)
+       }
 
-    let oldDataString = window.localStorage.getItem('myTodos')
-    let oldData = JSON.parse(oldDataString)
-    this.todoList = oldData || []
-
-  }, 
+        let oldDataString = window.localStorage.getItem('myTodos')
+        let oldData = JSON.parse(oldDataString)
+        this.todoList = oldData || []
+        let oldDataString2 = window.localStorage.getItem('mynewTodos')
+        let oldData2 = JSON.parse(oldDataString2)
+        this.newTodo = oldData2 || []
+        Date.prototype.Format = function (fmt) {
+            var o = {
+                "M+": this.getMonth() + 1, //月份
+                "d+": this.getDate(), //日
+                "h+": this.getHours(), //小时
+                "m+": this.getMinutes(), //分
+                "s+": this.getSeconds(), //秒
+                "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+                "S": this.getMilliseconds() //毫秒
+            };
+            if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+            for (var k in o)
+                if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+            return fmt;
+        }
+    },
     methods: {
-          addTodo: function(){
+
+        addTodo: function(){
                   this.todoList.push({
                             title: this.newTodo,
-                            createdAt: new Date(),
-                            done: false // 添加一个 done 属性
+                            createdAt: new Date().Format("yyyy-MM-dd hh:mm:ss"),
+                            done: false,// 添加一个 done 属性
+
                   })
             this.newTodo = ''  // 变成空
           },

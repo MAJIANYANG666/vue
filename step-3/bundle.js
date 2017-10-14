@@ -81,38 +81,60 @@ var _vue2 = _interopRequireDefault(_vue);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var app = new _vue2.default({
-  el: '#app',
-  data: {
-    newTodo: '',
-    todoList: []
-  },
-  created: function created() {
-    var _this = this;
-
-    window.onbeforeunload = function () {
-      var dataString = JSON.stringify(_this.todoList); // JSON 文档: https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/JSON
-      window.localStorage.setItem('myTodos', dataString); // 看文档https://developer.mozilla.org/zh-CN/docs/Web/API/Window/localStorage
-    };
-
-    var oldDataString = window.localStorage.getItem('myTodos');
-    var oldData = JSON.parse(oldDataString);
-    this.todoList = oldData || [];
-  },
-  methods: {
-    addTodo: function addTodo() {
-      this.todoList.push({
-        title: this.newTodo,
-        createdAt: new Date(),
-        done: false // 添加一个 done 属性
-      });
-      this.newTodo = ''; // 变成空
+    el: '#app',
+    data: {
+        newTodo: '',
+        todoList: []
     },
-    // 加了👇这个函数
-    removeTodo: function removeTodo(todo) {
-      var index = this.todoList.indexOf(todo); // Array.prototype.indexOf 是 ES 5 新加的 API
-      this.todoList.splice(index, 1); // 不懂 splice？赶紧看 MDN 文档！
+    created: function created() {
+        var _this = this;
+
+        window.onbeforeunload = function () {
+            var dataString = JSON.stringify(_this.todoList);
+            window.localStorage.setItem('myTodos', dataString);
+            var dataString2 = JSON.stringify(_this.newTodo);
+            window.localStorage.setItem('mynewTodos', dataString2);
+        };
+
+        var oldDataString = window.localStorage.getItem('myTodos');
+        var oldData = JSON.parse(oldDataString);
+        this.todoList = oldData || [];
+        var oldDataString2 = window.localStorage.getItem('mynewTodos');
+        var oldData2 = JSON.parse(oldDataString2);
+        this.newTodo = oldData2 || [];
+        Date.prototype.Format = function (fmt) {
+            var o = {
+                "M+": this.getMonth() + 1, //月份
+                "d+": this.getDate(), //日
+                "h+": this.getHours(), //小时
+                "m+": this.getMinutes(), //分
+                "s+": this.getSeconds(), //秒
+                "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+                "S": this.getMilliseconds() //毫秒
+            };
+            if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+            for (var k in o) {
+                if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, RegExp.$1.length == 1 ? o[k] : ("00" + o[k]).substr(("" + o[k]).length));
+            }return fmt;
+        };
+    },
+    methods: {
+
+        addTodo: function addTodo() {
+            this.todoList.push({
+                title: this.newTodo,
+                createdAt: new Date().Format("yyyy-MM-dd hh:mm:ss"),
+                done: false // 添加一个 done 属性
+
+            });
+            this.newTodo = ''; // 变成空
+        },
+        // 加了👇这个函数
+        removeTodo: function removeTodo(todo) {
+            var index = this.todoList.indexOf(todo); // Array.prototype.indexOf 是 ES 5 新加的 API
+            this.todoList.splice(index, 1); // 不懂 splice？赶紧看 MDN 文档！
+        }
     }
-  }
 });
 
 /***/ }),

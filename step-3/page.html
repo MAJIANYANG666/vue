@@ -1,24 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title></title>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        #app{
+            margin:0 auto;
+            margin-top:100px;
+            max-width:600px;
+        }
+        #app > h1{
+            text-align: center;
+            color: #ddc;
+        }
+        #app > .newTask > .form-control{
+            padding:0 10px;
+            width:600px;
+            line-height:2.5;
+            border:1px solid #ccc;
+            border-radius:5px;
+        }
+        .todos > li{
+            height:40px;
+        }
+        .todos > li >  span{
+            display: inline-block;
+            vertical-align: top;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+        .todos > li > .form-content{
+            width:170px;
+        }
+        .todos > li > button{
+            border:none;
+            border:1px solid #ddf;
+            background: #ddf;
+            color: white;
+            border-radius:5px;
+            cursor: pointer;
+            padding:2px 8px ;
+        }
+
+
+    </style>
 </head>
 <body>
- <div id="app">
-      <div class="newTask">
-        <input type="text" v-model="newTodo" @keypress.enter="addTodo">
-      </div>
-      <ol class="todos">
+<div id="app">
+    <h1>这是一个待办事项小应用</h1>
+    <div class="newTask">
+        <input type="text" placeholder="请输入待办事物" v-model="newTodo" @keypress.enter="addTodo" class="form-control">
+    </div>
+    <ol class="todos">
         <li v-for="todo in todoList">
-          <input type="checkbox" v-model="todo.done">
-          {{ todo.title }}
-          <span v-if="todo.done">已完成</span>
-          <span v-else>未完成</span>
-          <button @click="removeTodo(todo)">X</button>  <!-- 👈 加了一个按钮 -->
+            <input type="checkbox" v-model="todo.done">
+            <span class="form-content">{{ todo.title }}</span>
+            <span v-if="todo.done" style="width:80px;">已完成</span>
+            <span v-else style="width:80px;">未完成</span>
+            <span style="width:80px;">创建时间</span>
+            <span >{{todo.createdAt}}</span>
+            <button @click="removeTodo(todo)">X</button>  <!-- 👈 加了一个按钮 -->
         </li>
-      </ol>
- </div>
- <script src="bundle.js"></script>
+    </ol>
+</div>
+<script src="bundle.js"></script>
 </body>
 </html>
