@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        #signInAndSignUp {
+            margin: 0 auto;
+            margin-top: 100px;
+            max-width: 600px;
+        }
+        #signInAndSignUp{
+            text-align: center;
+        }
+        #signInAndSignUp > h1{
+            color: #aac;
+        }
+        #signInAndSignUp > .choose{
+            min-height:40px;
+        }
+        /*#signInAndSignUp:nth-child(3) ,#signInAndSignUp:nth-child(4){*/
+            /*margin-left:-10px;*/
+        /*}*/
+        #signInAndSignUp  .formRow{
+            margin-left:-20px;
+            min-height:30px;
+        }
+        #signInAndSignUp span{
+            display: inline-block;
+             width:60px;
+        }
+        #signInAndSignUp .button{
+            width:130px;
+            background: #33CCFF;
+            border-radius:3px;
+            border-color: #33CCFF;
+            color: #fff;
+        }
+        #signInAndSignUp > footer > p{
+            color: #999;
+            margin-top:30px;
+            font-size:14px;
+        }
+        #todo {
+            margin: 0 auto;
+            margin-top: 100px;
+            max-width: 600px;
+        }
+        #todo h1 {
+            text-align: center;
+            color: #ddc;
+        }
+        #todo h2 {
+            text-align: center;
+            color: #666;
+        }
+        #todo .newTask > .form-control {
+            padding: 0 10px;
+            width: 600px;
+            line-height: 2.5;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .todos > li {
+            height: 40px;
+        }
+        .todos > li > span {
+            display: inline-block;
+            vertical-align: top;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+        .todos > li > .form-content {
+            width: 170px;
+        }
+        .todos > li > button {
+            border: none;
+            border: 1px solid #ddf;
+            background: #ddf;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            padding: 2px 8px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="app">
+    <section id="signInAndSignUp" v-if="!currentUser">
+        <h1>这是一个待办事项小应用</h1>
+        <div class="choose">
+            <label ><input type="radio" name="type" v-model="actionType" value="signUp">注册</label>
+            <label ><input type="radio" name="type" v-model="actionType" value="login">登录</label>
+        </div>
+        <div class="signUp" v-if="actionType==='signUp'">
+            <form @submit.prevent="signUp">
+                <div class="formRow"><label ><span>用户名</span><input type="text" v-model="formData.username"></label></div>
+                <div class="formRow"><label ><span>密码</span><input type="password" v-model="formData.password"></label></div>
+                <div class="formActions"> <input type="submit" value="注册" class="button"></div>
+            </form>
+        </div>
+        <div class="login" v-if="actionType==='login'">
+            <form @submit.prevent="login">
+                <div class="formRow"><span>用户名</span><input type="text" v-model="formData.username"></div>
+                <div class="formRow"><span>密码</span><input type="password" v-model="formData.password"></div>
+                <div class="formActions"> <input type="submit" value="登入" class="button"></div>
+            </form>
+        </div>
+        <footer>
+            <p>Writen by Xiao Ma</p>
+        </footer>
+    </section>
+    <section id="todo" v-if="currentUser">
+
+        <p><button @click="logout">登出</button></p>
+        <h2>你好,{{currentUser.username}}</h2>
+        <h1>这是一个待办事项小应用</h1>
+        <div class="newTask">
+            <input type="text" placeholder="请输入待办事物" v-model="newTodo" @keypress.enter="addTodo" class="form-control">
+        </div>
+        <ol class="todos">
+            <li v-for="todo in todoList">
+                <input type="checkbox" v-model="todo.done">
+                <span class="form-content">{{ todo.title }}</span>
+                <span v-if="todo.done" style="width:80px;">已完成</span>
+                <span v-else style="width:80px;">未完成</span>
+                <span style="width:80px;">创建时间</span>
+                <span>{{todo.createdAt}}</span>
+                <button @click="removeTodo(todo)">X</button>  <!-- 👈 加了一个按钮 -->
+            </li>
+        </ol>
+    </section>
+</div>
+<script src="bundle.js"></script>
+</body>
+</html>
