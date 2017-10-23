@@ -1,6 +1,7 @@
 # resumer
 
 > A Vue.js project
+预览：https://majianyang666.github.io/vue/resumer/dist/index.html#/
 
 ## Build Setup
 
