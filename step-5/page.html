@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <title></title>
     <style>
+        [v-cloak] {
+            display: none;
+        }
         #signInAndSignUp {
             margin: 0 auto;
             margin-top: 100px;
@@ -89,7 +92,7 @@
 </head>
 <body>
 
-<div id="app">
+<div id="app" v-cloak>
     <section id="signInAndSignUp" v-if="!currentUser">
         <h1>这是一个待办事项小应用</h1>
         <div class="choose">

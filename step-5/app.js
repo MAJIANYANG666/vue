@@ -122,8 +122,8 @@ var app = new Vue({
             user.signUp().then((loginedUser) => {
                 this.currentUser = this.getCurrentUser()
             }, function (error) {
-                alert('注册失败')
-                console.log(error)
+                // alert('注册失败')
+                alert(error)
             });
         },
         login: function () {
@@ -131,8 +131,8 @@ var app = new Vue({
                 this.currentUser = this.getCurrentUser()
                 this.fetchTodos() // 登录成功后读取 todos
             }, function (error) {
-                alert('登录失败')
-                console.log(error)
+                // alert('登录失败')
+                alert(error)
             });
         },
         getCurrentUser: function () { // 👈

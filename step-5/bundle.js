@@ -401,8 +401,8 @@ var app = new _vue2.default({
             user.signUp().then(function (loginedUser) {
                 _this4.currentUser = _this4.getCurrentUser();
             }, function (error) {
-                alert('注册失败');
-                console.log(error);
+                // alert('注册失败')
+                alert(error);
             });
         },
         login: function login() {
@@ -412,8 +412,8 @@ var app = new _vue2.default({
                 _this5.currentUser = _this5.getCurrentUser();
                 _this5.fetchTodos(); // 登录成功后读取 todos
             }, function (error) {
-                alert('登录失败');
-                console.log(error);
+                // alert('登录失败')
+                alert(error);
             });
         },
         getCurrentUser: function getCurrentUser() {

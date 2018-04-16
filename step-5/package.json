@@ -4,7 +4,10 @@
   "description": "A vue.js demo",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack",
+    "watch": "webpack -w",
+    "deploy": "webpack -p"
   },
   "author": "",
   "license": "ISC",
